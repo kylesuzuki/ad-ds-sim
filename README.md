@@ -5,7 +5,7 @@
 </p>
 
 <h1>Active Directory Lab: User Authentication and Access Control Simulation in Azure</h1>
-This beginner-friendly tutorial provides hands-on experience with setting up an on-premises Active Directory within Azure Virtual Machines. Learn how to create a Domain Controller VM, install Active Directory, and configure Remote Desktop. Explore essential tasks such as joining clients to the domain and managing user accounts. Practice proper resource management by deleting the resource group and verifying its successful removal.<br />
+This beginner-friendly tutorial provides hands-on experience with setting up an on-premises Active Directory within Azure Virtual Machines. Learn how to install Active Directory on a Domain Controller VM and join a Client VM to the Domain. Explore essential tasks such as configuring Remote Desktop and managing user accounts. Practice proper resource management by deleting the resource group and verifying its successful removal.<br />
 
 <h2>List Summary</h2>
 
@@ -38,6 +38,12 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <h2>Installation Steps</h2>
 
 <h3>Setup Azure Resources and Establish Connectivity.</h3>
+<p>
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Azure Setup"/>
+</p>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+</p>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Azure Setup"/>
 </p>
