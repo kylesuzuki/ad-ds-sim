@@ -56,9 +56,10 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Installation"/>
 </p>
 <p>
-1. Install Active Directory Domain Services in DC-1.
-
-2. Promote DC-1 to a Domain Controller & setup a new forest.
+<ol>
+  <li>Install Active Directory Domain Services in DC-1.</li>
+  <li>Promote DC-1 to a Domain Controller and set up a new forest.</li>
+</ol>
 </p>
 
 <h3>Create Admin and Normal User Accounts in AD.</h3>
@@ -66,11 +67,11 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Account Creation"/>
 </p>
 <p>
-1. Open Active Directory Users and Computers (ADUC) and create two Organizational Units (OU) called "_EMPLOYEES" and "_ADMINS".
-
-2. Create and add a new admin to the "Domain Admins" Security Group.
-   
-3. Log out of DC-1, then log back in as the new admin.
+<ol>
+  <li>Open Active Directory Users and Computers (ADUC) and create two Organizational Units (OU) called "_EMPLOYEES" and "_ADMINS".</li>
+  <li>Create and add a new admin to the "Domain Admins" Security Group.</li>
+  <li>Log out of DC-1, then log back in as the new admin.</li>
+</ol>
 </p>
 
 <h3>Join Client-1 to the Domain.</h3>
@@ -78,11 +79,10 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Client to Domain"/>
 </p>
 <p>
-1. In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.
-
-2. Using Remote Desktop, log back into Client-1 as the original local admin and join Client-1 to the domain.
-   
-3. Back in DC-1, confirm that Client-1 is listed in ADUC.
+<ol>
+  <li>In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.</li>
+  <li>Using Remote Desktop, log back into Client-1 as the original local admin and join Client-1 to the domain.</li>
+</ol>
 </p>
 
 <h3>Configure Remote Desktop for Non-Administrative Users.</h3>
@@ -90,7 +90,9 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="RD Configuration"/>
 </p>
 <p>
-1. Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.
+<ol>
+  <li>Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.</li>
+</ol>
 </p>
 
 <h3>Create and Test Additional User Accounts.</h3>
@@ -98,15 +100,13 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Account Testing"/>
 </p>
 <p>
-1. Using Remote Desktop, log back into DC-1 as the new admin and create additional users in Powershell. (code: https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
-
-2. Open a second Remote Desktop window and log into Client-1 with one of the generated user accounts.
-   
-3. Unlocking a user account with excessive incorrect password attempts.
-   
-4. Resetting a user account's password.
-   
-5. Disabling and Enabling a user account.
+<ol>
+  <li>Using Remote Desktop, log back into DC-1 as the new admin and create additional users using this <a href="https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1">code</a> in Powershell.</li>
+  <li>Open a second Remote Desktop window and log into Client-1 with one of the generated user accounts.</li>
+  <li>Unlock a user account with excessive incorrect password attempts.</li>
+  <li>Reset a user account's password.</li>
+  <li>Disable and enable a user account.</li>
+</ol>
 </p>
 
 <h3>Delete the Resource Groups created earlier to avoid incurring costs.</h3>
