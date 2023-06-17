@@ -42,13 +42,13 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Azure Setup"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Azure Setup"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<ol>
+  <li>In Azure, create a Domain Controller VM (Windows Server 2022) named "DC-1" and set its NIC Private IP address to Static.</li>
+  <li>Create a Client VM (Windows 10) named "Client-1", ensuring that you use the same Resource group and Vnet as DC-1.</li>
+  <li>Using Remote Desktop, log into Client-1 and initiate a perpetual ping to DC-1's private IP address.</li>
+  <li>Open a second Remote Desktop window and log into DC-1 to enable ICMPv4.</li>
+  <li>Monitor the ping from Client-1 to confirm its successful execution.</li>
+</ol>
 </p>
 
 <h3>Install and Configure Active Directory (AD).</h3>
@@ -56,7 +56,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Installation"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+1. Install Active Directory Domain Services in DC-1.
+
+2. Promote DC-1 to a Domain Controller & setup a new forest.
 </p>
 
 <h3>Create Admin and Normal User Accounts in AD.</h3>
@@ -64,7 +66,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Account Creation"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+1. Open Active Directory Users and Computers (ADUC) and create two Organizational Units (OU) called "_EMPLOYEES" and "_ADMINS".
+
+2. Create and add a new admin to the "Domain Admins" Security Group.
+   
+3. Log out of DC-1, then log back in as the new admin.
 </p>
 
 <h3>Join Client-1 to the Domain.</h3>
@@ -72,7 +78,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Client to Domain"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+1. In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.
+
+2. Using Remote Desktop, log back into Client-1 as the original local admin and join Client-1 to the domain.
+   
+3. Back in DC-1, confirm that Client-1 is listed in ADUC.
 </p>
 
 <h3>Configure Remote Desktop for Non-Administrative Users.</h3>
@@ -80,7 +90,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="RD Configuration"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+1. Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.
 </p>
 
 <h3>Create and Test Additional User Accounts.</h3>
@@ -88,7 +98,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Account Testing"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+1. Using Remote Desktop, log back into DC-1 as the new admin and create additional users in Powershell. (code: https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
+
+2. Open a second Remote Desktop window and log into Client-1 with one of the generated user accounts.
+   
+3. Unlocking a user account with excessive incorrect password attempts.
+   
+4. Resetting a user account's password.
+   
+5. Disabling and Enabling a user account.
 </p>
 
 <h3>Delete the Resource Groups created earlier to avoid incurring costs.</h3>
