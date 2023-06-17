@@ -43,8 +43,15 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 </p>
 <p>
 <ol>
-  <li>In Azure, create a Domain Controller VM (Windows Server 2022) named "DC-1" and set its NIC Private IP address to Static.</li>
-  <li>Create a Client VM (Windows 10) named "Client-1", ensuring that you use the same Resource group and Vnet as DC-1.</li>
+  <li>In Azure, create a Domain Controller VM (Windows Server 2022) named "DC-1" and set its NIC Private IP address to Static.
+  <ul>
+    <li>Start by searching for "Virtual Machine" and clicking on "Create." Choose your subscription and create a new resource group with a suitable name. Provide a name for the virtual machine, select the region, and set the availability options. Pick the desired Windows Server image and select an appropriate size for the virtual machine. Set a username and password, review the settings, and click "Create."</li>
+    <li>To configure the networking for the virtual machine, search for "Virtual Machine" again and select the specific virtual machine. Access the "Networking" section, click on the network interface, and navigate to the IP configurations. Modify the assignment from "Dynamic" to "Static" to set a static IP address.</li>
+  </ul></li>
+  <li>Create a Client VM (Windows 10) named "Client-1", ensuring that you use the same Resource group and Vnet as DC-1.
+      <ul>
+    <li>Search for "Virtual Machine" and click on "Create." Choose your subscription, pick the resource group as "DC-1", and name the virtual machine. Select the region, set the availability options, and pick the desired Windows Server image. Select an appropriate size for the virtual machine, and set a username and password. Pick the same virtual network as "DC-1", review the settings, and click "Create."</li>
+  </ul></li>
   <li>Using Remote Desktop, log into Client-1 and initiate a perpetual ping to DC-1's private IP address.</li>
   <li>Open a second Remote Desktop window and log into DC-1 to enable ICMPv4.</li>
   <li>Monitor the ping from Client-1 to confirm its successful execution.</li>
