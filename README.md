@@ -15,8 +15,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 - Join Client-1 to the Domain.
 - Configure Remote Desktop for Non-Administrative Users.
 - Create and Test Additional User Accounts.
-- Delete the Resource Group to avoid incurring costs.
-- Verify the successful deletion of the Resource Group.
+- Delete the Resource Groups created in this lab to avoid incurring costs and verify its deletion.
 
 <h2>Environments and Technologies Used</h2>
 
@@ -145,7 +144,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
   <li>Paste the Public IP address</li>
   <li>Click Connect
     <ul>
-      <li>Note: If you ever get confused which remote desktop connection window is DC-1 or Client-1, you can open the Command Prompt, type "hostname", and click enter to see which one you are in.</li>
+      <li>If you ever get confused which remote desktop connection window is DC-1 or Client-1, you can open the Command Prompt, type "hostname", and click enter to see which one you are in.</li>
     </ul>
   </li>
   <li>Enter credentials (i.e. Username: labuser and Password: Password1)</li>
@@ -261,7 +260,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <h4>Create and add a new admin to the "Domain Admins" Security Group.</h4>
 <p>
 <ul>
-  <li>Side note: Normally when you install Active Directory, it’s usually done with some kind of generic (administrator) account (i.e. "labuser"). However, you want to get out of the habit of using these generic accounts to do administrative tasks.
+  <li>Normally when you install Active Directory, it’s usually done with some kind of generic (administrator) account (i.e. "labuser"). However, you want to get out of the habit of using these generic accounts to do administrative tasks.
     <ul>
       <li>You will notice when you start working somewhere, you will usually have more than one account and then everyone will have their own accounts too. It is really bad practice to have an account called "user" or "admin" because account names should always be tied to a human’s identity.</li>
       <li>So since we have a kind of ambiguous and not really realistic account called "labuser" in the Users Organizational Unit, we’re going to create another administrator account that’s tied to us as an individual (i.e. Jane Doe) and then we’ll log out of "labuser" and log back in with that new administrator account.
@@ -399,7 +398,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <h4>Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.</h4>
 <p>
 <ul>
-  <li>Side note: now we are setting the remote desktop up so that all normal domain users are able to remote into Client-1.
+  <li>Now we are setting the remote desktop up so that all normal domain users are able to remote into Client-1.
     <ul>
       <li>Right now, only the domain admin (jane_admin) is allowed to remotely log into Client-1.</li>
       <li>We are doing this because eventually, we are going to create a bunch of random domain users inside our domain and then we are going to use one of those random domain users to log into Client-1. This essentially simulates an environment such as a University where you have a lot of students and a lot of computers and any given student can log into any given computer.</li>
@@ -457,49 +456,122 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 </p>
 <h4>Using Remote Desktop, log back into DC-1 as the new admin and create additional users using this <a href="https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1">code</a> in Powershell.</h4>
 <p>
-<ol>
-
-</ol>
+<ul>
+  <li>Now we are going to create a bunch of random domain users inside our domain and then we are going to use one of those random domain users to log into Client-1.
+    <ul>
+      <li>Remember, this essentially simulates an environment such as a University where you have a lot of students and a lot of computers and any given student can log into any given computer</li>
+    </ul>
+  </li>
+</ul>
 </p>
-<h4>Open a second Remote Desktop window and log into Client-1 with one of the generated user accounts.</h4>
 <p>
 <ol>
-
+  <li>Go back into your DC-1 Remote Desktop Connection (i.e. Username: mydomain.com\jane_admin and Password: Password1)</li>
+  <li>Once logged in, in the “Type here to search” section (bottom left corner of the screen), search powershell_ise; right click the search result; click Run as administrator; click Yes
+    <ul>
+      <li>Powershell is a powerful scripting language native to Windows, offering extensive capabilities for performing a wide range of tasks.</li>
+      <li>“ise” stands for “Integrated Scripting Environment”</li>
+    </ul>
+  </li>
+  <li>Open the hyperlink in the instructions above</li>
+  <li>Click the two squares icon (“Copy raw contents”)
+    <ul>
+      <li>You can try to read and understand the code (though you really don’t have to because it is outside the scope of this lab), but essentially it is going to:
+        <ul>
+          <li>Create 10000 accounts</li>
+          <li>All the accounts are going to have Password1 as its password</li>
+          <li>The accounts are going to be created and stored in the _EMPLOYEES organizational unit</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Go back into you DC-1 Remote Desktop Connection in Powershell ISE</li>
+  <li>Click the white paper with a yellow badge icon (“New Script”)</li>
+  <li>Paste the code</li>
+  <li>Click the green play button icon (“Run Script (F5)”)</li>
+  <li>Still in your DC-1 Remote Desktop Connection, go back into Active Directory Users and Computers</li>
+  <li>Click mydomain.com</li>
+  <li>Click  _EMPLOYEES to select, Right click _EMPLOYEES and click Refresh</li>
+</ol>
+</p>
+<h4>Log out of Client-1, then log back into Client-1 with one of the generated user accounts.</h4>
+<p>
+<ol>
+  <li>Still in your DC-1 Remote Desktop Connection, choose any account that was created and stored in the _EMPLOYEES organizational unit and copy the name</li>
+  <li>Log out of Client-1</li>
+  <li>Log back into Client-1 with the account you just copied (i.e. Username: mydomain.com\[account you just copied] and Password: Password1)
+    <ul>
+      <li>If you ever want to check which user is logged in, you can open the Command Prompt, type “whoami”, and press enter to confirm</li>
+      <li>Side note: You can open “File Explorer”; click “This PC”; click “Windows(C:)”; and then click “Users” to see a folder of every user that has logged into your computer up to that point</li>
+    </ul>
+  </li>
 </ol>
 </p>
 <h4>Unlock a user account with excessive incorrect password attempts.</h4>
 <p>
 <ol>
-
+  <li>In your DC-1 Remote Desktop Connection, choose any account that was created and stored in the _EMPLOYEES organizational unit and copy the name</li>
+  <li>Attempt to log into Client-1 with the account you just copied (i.e. Username: mydomain.com\[account you just copied], entering the incorrect password ~x10 times
+    <ul>
+      <li>10 incorrect password attempts should lock the account you are trying to log into</li>
+    </ul>
+  </li>
+  <li>Go back into your DC-1 Remote Desktop Connection</li>
+  <li>Right click the name of the account you copied earlier</li>
+  <li>Click Properties</li>
+  <li>Click Account</li>
+  <li>Click the “Unlock account” box to check it</li>
+  <li>Click OK</li>
 </ol>
 </p>
 <h4>Reset a user account's password.</h4>
 <p>
 <ol>
-
+  <li>In your DC-1 Remote Desktop Connection, right click the account of the person in the _EMPLOYEES organizational unit that forgot their password (select any account for the sake of this exercise)</li>
+  <li>Click Reset Password</li>
+  <li>Reset their password to something new by entering a new password and confirming
+    <ul>
+      <li>Side note: Notice you can “Unlock the user’s account” here too</li>
+    </ul>
+  </li>
+  <li>Click OK (x2 times)</li>
 </ol>
 </p>
 <h4>Disable and enable a user account.</h4>
 <p>
 <ol>
-
+  <li>In your DC-1 Remote Desktop Connection, right click the account of the person in the _EMPLOYEES organizational unit that you want to disable</li>
+  <li>Click Disable Account</li>
+  <li>Click OK
+    <ul>
+      <li>Now you can try to log into Client-1 with the account you disabled (i.e. Username: mydomain.com\[account you just disabled] and Password: Password1) and you should run into the following message: “The user account is currently disabled and cannot be used. For assistance, contact your system administrator or technical support.”</li>
+    </ul>
+  </li>
+  <li>In your DC-1 Remote Desktop Connection, right click the account of the person in the _EMPLOYEES organizational unit that you want to re-enable</li>
+  <li>Click Enable Account</li>
+  <li>Click OK
+    <ul>
+      <li>Now you should be able to log into Client-1 with the account you re-enabled (i.e. Username: mydomain.com\[account you just re-enabled] and Password: Password1)</li>
+    </ul>
+  </li>
 </ol>
 </p>
 
-<h3>Delete the Resource Groups created earlier to avoid incurring costs.</h3>
+<h3>Delete the Resource Groups created in this lab to avoid incurring costs and verify its deletion.</h3>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Delete RG"/>
 </p>
 <p>
-To delete the Resource Group, follow these steps: search "Resource Group", click on the resource group (e.g., **), click 'Delete resource group', then type or copy and paste the name of your resource group (e.g., RG-Lab-2) to confirm the deletion. Click 'Delete'.
-
-Repeat these steps for the ** resource group that was automatically created earlier as well.
-</p>
-
-<h3>Verify the successful deletion of the Resource Groups.</h3>
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Delete Verified"/>
-</p>
-<p>
-To verify the successful deletion of the Resource Groups, search "Resource Group" and confirm that your specified resource groups (e.g., ** and **) are no longer listed.
+<ol>
+  <li>Search for Resource Group</li>
+  <li>Click on your resource group</li>
+  <li>Click Delete resource group</li>
+  <li>Type or copy/paste the name of your resource group to confirm deletion
+    <ul>
+      <li>Repeat these steps for every resource group created in this lab</li>
+    </ul>
+  </li>
+  <li>Search for Resource Group</li>
+  <li>Confirm that your resource group has been deleted</li>
+</ol>
 </p>
