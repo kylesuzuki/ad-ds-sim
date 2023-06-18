@@ -261,13 +261,61 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <h4>Create and add a new admin to the "Domain Admins" Security Group.</h4>
 <p>
 <ol>
-
+  <li>Side note: Normally when you install Active Directory, it’s usually done with some kind of generic (administrator) account (i.e. "labuser"). However, you want to get out of the habit of using these generic accounts to do administrative tasks.
+    <ul>
+      <li>You will notice when you start working somewhere, you will usually have more than one account and then everyone will have their own accounts too. It is really bad practice to have an account called "user" or "admin" because account names should always be tied to a human’s identity.</li>
+      <li>So since we have a kind of ambiguous and not really realistic account called "labuser" in the Users Organizational Unit, we’re going to create another administrator account that’s tied to us as an individual (i.e. Jane Doe) and then we’ll log out of "labuser" and log back in with that new administrator account.
+        <ul>
+          <li>We could keep using "labuser" but again, creating our own admin account will give us some kind of idea of actual real-world practice.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Right click _ADMINS, go to New, go to Organizational Unit
+  <li>Enter First name (i.e. jane)</li>
+  <li>Enter Last name (i.e. doe)</li>
+  <li>Enter User logon name (i.e. jane_admin)
+    <ul>
+      <li>A lot of times in organizations, you’ll see something like "a-jane", which means "admin-jane"</li>
+    </ul>
+  </li>
+  <li>Click Next</li>
+  <li>Enter Password (i.e. Password1)</li>
+  <li>Uncheck "User must change password at next logon"
+    <ul>
+      <li>Normally, we’d want to leave this checked and force the user to change it, but we’re just creating it for ourselves.</li>
+    </ul>
+  </li>
+  <li>Check "Password never expires"</li>
+  <li>Click Next</li>
+  <li>Click Finish
+    <ul>
+      <li>Now a user account named jane_admin has been created, but it’s not actually an admin yet.</li>
+    </ul>
+  </li>
+  <li>In the _ADMINS organizational unit, right click jane_admin, click on Properties.</li>
+  <li>Click Member Of
+    <ul>
+      <li>Notice this user (jane_admin) is a member of "Domain Users" group, which is a default group that all domain accounts are a member of</li>
+    </ul>
+  </li>
+  <li>Click Add</li>
+  <li>Type domain, then click Check Names</li>
+  <li>Click on "Domain Admins", then click OK (x2 times)
+    <ul>
+      <li>The "Domain Admins" group is a built-in security group. Everyone who’s a member of this group can make changes to the domain (i.e. make new accounts, delete stuff, etc.)</li>
+    </ul>
+  </li>
+  <li>Click Apply, then click OK</li>
 </ol>
 </p>
 <h4>Log out of DC-1, then log back in as the new admin.</h4>
 <p>
 <ol>
-
+  <li>Open Command Prompt</li>
+  <li>Type "logoff" then press enter</li>
+  <li>Open the Remote Desktop Connection application on your computer to go back into your DC-1 Remote Desktop Connection.
+  <li>Enter credentials (i.e. Username: mydomain.com\jane_admin and Password: Password1)</li>
 </ol>
 </p>
 
