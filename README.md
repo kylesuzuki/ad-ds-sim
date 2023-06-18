@@ -1,5 +1,3 @@
-<h1>Work in Progress (please check back later for updates).</h1>
-
 <p align="center">
 <img src="https://i.imgur.com/wHFQr4x.png" alt="Active Directory logo"/>
 </p>
@@ -38,7 +36,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Setup Azure Resources and Establish Connectivity.</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Azure Setup"/>
+<img src="https://i.imgur.com/T5POc14.png" height="80%" width="80%" alt="Azure and Connectivity"/>
 </p>
 <h4>In Azure, create a Domain Controller VM (Windows Server 2022) named "DC-1" and configure its NIC Private IP address to Static.</h4>
 <p>
@@ -179,7 +177,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Install and Configure Active Directory (AD).</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Installation"/>
+<img src="https://i.imgur.com/oZUV1jl.png" height="80%" width="80%" alt="AD Installation"/>
 </p>
 <h4>Install Active Directory Domain Services in DC-1.</h4>
 <p>
@@ -235,7 +233,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Create Admin and Normal User Accounts in AD.</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Account Creation"/>
+<img src="https://i.imgur.com/9kISnyR.png" height="80%" width="80%" alt="AD Account Creation"/>
 </p>
 <h4>Open Active Directory Users and Computers (ADUC) and create two Organizational Units (OU) called "_EMPLOYEES" and "_ADMINS".</h4>
 <p>
@@ -324,7 +322,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Join Client-1 to the Domain.</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Client to Domain"/>
+<img src="https://i.imgur.com/T8qkBy6.png" height="80%" width="80%" alt="Client to Domain"/>
 </p>
 <h4>In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.</h4>
 <p>
@@ -393,7 +391,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Configure Remote Desktop for Non-Administrative Users.</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="RD Configuration"/>
+<img src="https://i.imgur.com/Z5ZhXCa.png" height="80%" width="80%" alt="RD Configuration"/>
 </p>
 <h4>Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.</h4>
 <p>
@@ -452,7 +450,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Create and Test Additional User Accounts.</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Account Testing"/>
+<img src="https://i.imgur.com/Qatc4lY.png" height="80%" width="80%" alt="Account Testing"/>
 </p>
 <h4>Using Remote Desktop, log back into DC-1 as the new admin and create additional users using this <a href="https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1">code</a> in Powershell.</h4>
 <p>
@@ -559,7 +557,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 
 <h3>Delete the Resource Groups created in this lab to avoid incurring costs and verify its deletion.</h3>
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Delete RG"/>
+<img src="https://i.imgur.com/T5lFp7W.png" height="80%" width="80%" alt="Delete RG and Verify"/>
 </p>
 <p>
 <ol>
