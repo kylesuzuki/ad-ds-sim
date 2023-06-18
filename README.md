@@ -260,7 +260,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 </p>
 <h4>Create and add a new admin to the "Domain Admins" Security Group.</h4>
 <p>
-<ol>
+<ul>
   <li>Side note: Normally when you install Active Directory, it’s usually done with some kind of generic (administrator) account (i.e. "labuser"). However, you want to get out of the habit of using these generic accounts to do administrative tasks.
     <ul>
       <li>You will notice when you start working somewhere, you will usually have more than one account and then everyone will have their own accounts too. It is really bad practice to have an account called "user" or "admin" because account names should always be tied to a human’s identity.</li>
@@ -271,6 +271,10 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
       </li>
     </ul>
   </li>
+</ul>
+</p>
+<p>
+<ol>
   <li>Right click _ADMINS, go to New, go to Organizational Unit
   <li>Enter First name (i.e. jane)</li>
   <li>Enter Last name (i.e. doe)</li>
@@ -325,14 +329,66 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 </p>
 <h4>In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.</h4>
 <p>
+<ul>
+  <li>Earlier, the Virtual Network (Vnet) created a "hidden" DNS server that Client-1 is currently using ("inheriting"). In order to join Client-1 to our domain (mydomain.com), Client-1 needs to use the domain controller (DC-1) as its DNS server. This is because the domain controller (DC-1) knows what our domain (mydomain.com) is.
+    <ul>
+      <li>If we continue to not use the domain controller (DC-1) as Client-1's DNS server, Client-1 could say "I want to join the domain, mydomain.com" and this "hidden" DNS server created by the Virtual Network (Vnet) would look on the internet for a random "mydomain.com" and fail.
+        <ul>
+          <li>To confirm, open the Command Prompt, type "ipconfig /all", and press enter to confirm that you are using a public IP address as your DNS server as created by the Virtual Network (Vnet).</li>
+        </ul>
+      </li>
+      <li>If we use the domain controller (DC-1) as Client-1's DNS server, Client-1 could say "I want to join the domain, mydomain.com" and the domain controller (DC-1) would respond "Oh hey, that's me. Use this IP address." since it is acting as Client-1's DNS server.
+        <ul>
+          <li>After you've finished this section, to confirm, open the Command Prompt, type "ipconfig /all", and press enter to confirm that you are now using the domain controller (DC-1) as your DNS server.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+</p>
+<p>
 <ol>
-
+  <li>Search Virtual Machine</li>
+  <li>Click DC-1</li>
+  <li>Click Networking</li>
+  <li>Copy the NIC Private IP</li>
+  <li>Search Virtual Machine</li>
+  <li>Click Client-1</li>
+  <li>Click Networking</li>
+  <li>Click on the Network Interface</li>
+  <li>Click DNS servers</li>
+  <li>Click Custom instead of "Inherit from virtual network"</li>
+  <li>Paste DC-1's NIC Private IP</li>
+  <li>Click Save</li>
+  <li>Search Virtual Machine</li>
+  <li>Click Client-1</li>
+  <li>Click Restart
+    <ul>
+      <li>When we restart Client-1 from the Azure Portal, it's going to flush the DNS cache.</li>
+    </ul>
+  <li>Click Yes</li>
 </ol>
 </p>
 <h4>Using Remote Desktop, log back into Client-1 as the original local admin and join Client-1 to the domain.</h4>
 <p>
 <ol>
-
+  <li>Log back into your Client-1 Remote Desktop Connection (i.e. Username: labuser and Password: Password1)</li>
+  <li>Right click Start (in the bottom right corner of the screen)</li>
+  <li>Click System</li>
+  <li>Click Rename this PC (advanced)</li>
+  <li>Click Change…</li>
+  <li>Select "Domain:" and type mydomain.com; Click OK
+    <ul>
+      <li>We’re typing mydomain.com because remember, we’re pointing to our domain controller which knows what mydomain.com is. This is why a Computer Name/Domain Changes window pops up instead of an error message.</li>
+    </ul>
+  </li>
+  <li>Enter Username (i.e. mydomain.com\jane_admin)</li>
+  <li>Enter Password (i.e. Password1)</li>
+  <li>Click OK</li>
+  <li>Allow the Client-1 Remote Desktop Connection to restart in order to finish joining the domain</li>
+    <ul>
+      <li>So now, we’re going to be able to actually log into Client-1 with our domain admin (jane_admin) because Client-1 will be a member of the domain controller (DC-1) and the domain admin (jane_admin) will be able to log in from any computers that are on the domain controller (DC-1).</li>
+    </ul>
 </ol>
 </p>
 
@@ -342,8 +398,56 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 </p>
 <h4>Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.</h4>
 <p>
+<ul>
+  <li>Side note: now we are setting the remote desktop up so that all normal domain users are able to remote into Client-1.
+    <ul>
+      <li>Right now, only the domain admin (jane_admin) is allowed to remotely log into Client-1.</li>
+      <li>We are doing this because eventually, we are going to create a bunch of random domain users inside our domain and then we are going to use one of those random domain users to log into Client-1. This essentially simulates an environment such as a University where you have a lot of students and a lot of computers and any given student can log into any given computer.</li>
+      <li>Normally we'd want to make this kind of change with something called "Group Policy" (so you don't need to log into each computer to make changes). However, group policies are a bit out of the scope of this lab.</li>
+    </ul>
+  </li>
+</ul>
+</p>
+<p>
 <ol>
-
+  <li>Log back into your Client-1 Remote Desktop Connection (i.e. Username: mydomain.com\jane_admin and Password: Password1)</li>
+  <li>Right click Start (in the bottom right corner of the screen)</li>
+  <li>Click System</li>
+  <li>Click Remote desktop</li>
+  <li>Click Select users that can remotely access this PC
+    <ul>
+      <li>Notice you can see who is currently allowed access to remote desktop into the computer (i.e. MYDOMAIN\jane_admin)</li>
+    </ul>
+  </li>
+  <li>Click Add</li>
+  <li>Type "domain users"; click Check Names; Click OK
+    <ul>
+      <li>Instead of adding an individual user (because obviously we don't want to add like 10,000 users), we can use this special built-in security group called "domain users" (which all users in the domain are automatically in)</li>
+    </ul>
+  </li>
+  <li>Click OK
+    <ul>
+      <li>Now, essentially all domain users are allowed to log into this computer. To confirm:
+        <ul>
+          <li>Go back into your DC-1 Remote Desktop Connection</li>
+          <li>In the Service Manager application, click on Tools, then click Active Directory Users and Computers
+            <ul>
+              <li>Alternatively, in the "Type here to search" section (bottom left corner of the screen), search Active Directory Users and Computers and open search result</li>
+              <li>Alternatively, in the "Type here to search" section (bottom left corner of the screen), open the "Windows Administrative Tools" folder then click Active Directory Users and Computers</li>
+            </ul>
+          </li>
+          <li>Click mydomain.com</li>
+          <li>Click Users</li>
+          <li>Click Domain Users</li>
+          <li>Click Members
+            <ul>
+              <li>Notice all user accounts that are created will automatically get added to this "Domain Users" group because we allowed "Domain Users" to remotely log into Client-1. So anyone who's in this group should be allowed to log into Client-1.</li>
+            </ul>
+          </li>
+          <li>Click Cancel</li>
+    </ul>
+  </li>
+</ul>
 </ol>
 </p>
 
