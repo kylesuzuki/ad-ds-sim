@@ -5,7 +5,7 @@
 </p>
 
 <h1>Active Directory Lab: User Authentication and Access Control Simulation in Azure</h1>
-This beginner-friendly tutorial provides hands-on experience with setting up an on-premises Active Directory within Azure Virtual Machines. Learn how to install Active Directory on a Domain Controller VM and join a Client VM to the Domain. Explore essential tasks such as configuring Remote Desktop and managing user accounts. Practice proper resource management by deleting the resource group and verifying its successful removal.<br />
+This comprehensive tutorial provides hands-on experience with setting up an on-premises Active Directory within Azure Virtual Machines. Learn how to install Active Directory on a Domain Controller VM and join a Client VM to the Domain. Explore essential tasks such as configuring Remote Desktop and managing user accounts. Practice proper resource management by deleting the resource group and verifying its successful removal.<br />
 
 <h2>List Summary</h2>
 
@@ -41,20 +41,140 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Azure Setup"/>
 </p>
+<h4>In Azure, create a Domain Controller VM (Windows Server 2022) named "DC-1" and configure its NIC Private IP address to Static.</h4>
 <p>
 <ol>
-  <li>In Azure, create a Domain Controller VM (Windows Server 2022) named "DC-1" and set its NIC Private IP address to Static.
-  <ul>
-    <li>Start by searching for "Virtual Machine" and clicking on "Create." Choose your subscription and create a new resource group with a suitable name. Provide a name for the virtual machine, select the region, and set the availability options. Pick the desired Windows Server image and select an appropriate size for the virtual machine. Set a username and password, review the settings, and click "Create."</li>
-    <li>To configure the networking for the virtual machine, search for "Virtual Machine" again and select the specific virtual machine. Access the "Networking" section, click on the network interface, and navigate to the IP configurations. Modify the assignment from "Dynamic" to "Static" to set a static IP address.</li>
-  </ul></li>
-  <li>Create a Client VM (Windows 10) named "Client-1", ensuring that you use the same Resource group and Vnet as DC-1.
-      <ul>
-    <li>Search for "Virtual Machine" and click on "Create." Choose your subscription, pick the resource group as "DC-1", and name the virtual machine. Select the region, set the availability options, and pick the desired Windows Server image. Select an appropriate size for the virtual machine, and set a username and password. Pick the same virtual network as "DC-1", review the settings, and click "Create."</li>
-  </ul></li>
-  <li>Using Remote Desktop, log into Client-1 and initiate a perpetual ping to DC-1's private IP address.</li>
-  <li>Open a second Remote Desktop window and log into DC-1 to enable ICMPv4.</li>
-  <li>Monitor the ping from Client-1 to confirm its successful execution.</li>
+  <li>Search Virtual Machine</li>
+    <ul>
+      <li>A VM is like a network switch that is in the cloud</li>
+    </ul>
+  <li>Click Create; Click Azure virtual machine</li>
+  <li>Choose your Subscription (i.e. Azure subscription 1)</li>
+  <li>For Resource group, click "Create new" and write a name (i.e. AD-Lab)</li>
+  <li>Name your virtual machine (i.e. DC-1)
+    <ul>
+      <li>This stands for Domain Controller, which is just a server or a computer that has an active directory installed on it.</li>
+    </ul>
+  </li>
+  <li>Pick a Region where the virtual machine is being created (i.e. (US) West US 3)</li>
+  <li>Ensure Availability options is "No infrastructure redundancy required"</li>
+  <li>Click Image and choose Windows Server 2022 Datacenter: Azure Edition - Gen2 (free services eligible)</li>
+  <li>Click Size and choose Standard_E2s_v3 - 2 vcpus, 16 GiB memory ($159.14/month)</li>
+  <li>Set Username (i.e. labuser)</li>
+  <li>Set Password (i.e. Password1)</li>
+  <li>Click Review + create
+    <ul>
+      <li>If you get a validation error for Networking, just click on the Networking tab and then go back to Review + create</li>
+    </ul>
+  </li>
+  <li>Click Create
+    <ul>
+      <li>Take note of the Resource Group and Virtual Network (Vnet) that get created at this time</li>
+    </ul>
+  </li> 
+  <li>Open DC-1</li>
+  <li>Click Networking</li>
+  <li>Click the Network Interface (aka NIC; should say something like dc-1755)</li>
+  <li>Click IP configurations</li>
+  <li>Click ipconfig1</li>
+  <li>Change Assignment from Dynamic to Static
+    <ul>
+      <li>Static means the IP address is always going to be this and it is not going to change (i.e. regardless of if we turn the computer off and leave it off for like a year and turn it back on).</li>
+    </ul>
+  </li>
+  <li>Click Save</li>
+</ol>
+</p>
+<h4>Create a Client VM (Windows 10) named "Client-1", ensuring that you use the same Resource group and Vnet as DC-1.</h4>
+<p>
+<ol>
+  <li>Search Virtual Machine</li>
+  <li>Click Create; Click Azure virtual machine</li>
+  <li>Choose your Subscription (i.e. Azure subscription 1)</li>
+  <li>Choose your resource group (i.e. AD-Lab)</li>
+  <li>Name your virtual machine (i.e. Client-1)</li>
+  <li>Pick a Region where the virtual machine is being created (i.e. (US) West US 3)</li>
+  <li>Ensure Availability options is “No infrastructure redundancy required”</li>
+  <li>Click Image and choose Windows 10 Pro, version 21H2 - Gen2 (free services eligible)</li>
+  <li>Click Size and choose Standard_E2s_v3 - 2 vcpus, 16 GiB memory ($91.98/month)</li>
+  <li>Set Username (i.e. labuser)</li>
+  <li>Set Password (i.e. Password1)</li>
+  <li>Click Next; Leave all the Disk options as it is; Click Next</li>
+  <li>Ensure Virtual network is set to DC-1-vnet</li>
+  <li>Ensure Subnet is set to default (10.0.0.0/24)</li>
+  <li>Wait for validation on Review + create then click create</li>
+  <li>Click Review + create</li>
+  <li>Click Create</li>
+</ol>
+</p>
+<h4>Using Remote Desktop, log into Client-1 and initiate a perpetual ping to DC-1's private IP address.</h4>
+<p>
+<ol>
+  <li>Open Client-1</li>
+  <li>Copy the Public IP address</li>
+  <li>Open the Remote Desktop Connection application on your computer</li>
+  <li>Paste the Public IP address</li>
+  <li>Click Connect</li>
+  <li>Enter credentials (i.e. Username: labuser and Password: Password1)
+    <ul>
+      <li>If you do not see an option to enter credentials, click More choices, then click Use a different account.</li>
+    </ul>
+  </li>
+  <li>A warning message may pop up saying that it’s not trustworthy, just click Yes</li>
+  <li>A "Choose privacy settings for your device" message may pop up, just set all to No and click accept</li>
+  <li>Back on your actual computer, Search Virtual Machine</li>
+  <li>Click DC-1</li>
+  <li>Copy the Private IP address</li>
+  <li>Go back into your Client-1 Remote Desktop Connection</li>
+  <li>Open Command Prompt</li>
+  <li>Type "ping -t (and paste the private IP address)" then press enter
+    <ul>
+      <li>ping -t is a perpetual ping that will keep going forever until you stop it</li>
+      <li>Notice the requests time out because DC-1’s Windows Firewall is blocking ICMP traffic.</li>
+    </ul>
+  </li>
+  <li>Press Ctrl + C to stop the perpetual ping</li>
+</ol>
+</p>
+<h4>Open a second Remote Desktop window and log into DC-1 to enable ICMPv4.</h4>
+<p>
+<ol>
+  <li>Back in Azure, open DC-1</li>
+  <li>Copy the Public IP address</li>
+  <li>Open another window of the Remote Desktop Connection application on your computer</li>
+  <li>Paste the Public IP address</li>
+  <li>Click Connect
+    <ul>
+      <li>Note: If you ever get confused which remote desktop connection window is DC-1 or Client-1, you can open the Command Prompt, type "hostname", and click enter to see which one you are in.</li>
+    </ul>
+  </li>
+  <li>Enter credentials (i.e. Username: labuser and Password: Password1)</li>
+  <li>A warning message may pop up saying that it’s not trustworthy, just click Yes</li>
+  <li>Once logged in, in the "Type here to search" section (bottom left corner of the screen), search wf.msc and open the search result
+    <ul>
+      <li>wf stands for Windows Firewall; msc stands for Microsoft Management Console</li>
+      <li>Alternatively, search Windows Defender Firewall with Advanced Security and open search result</li>
+    </ul>
+  </li>
+  <li>The Server Manager application should automatically pop up. If it doesn’t, you can search Server Manager in the "Type here to search" section (bottom left corner of the screen) and open the search result</li>
+  <li>Click Inbound Rules</li>
+  <li>Click Protocol (to sort the inbound rules by protocol type)</li>
+  <li>Look for the following two inbound rules named "Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In)" using ICMPv4 protocol and right click them, then click Enable rule</li>
+    <ul>
+      <li>ICMP is the protocol that ping uses, so we are allowing Client-1 to be able to ping DC-1</li>
+    </ul>
+</ol>
+</p>
+<h4>Monitor the ping from Client-1 to confirm its successful execution.</h4>
+<p>
+<ol>
+  <li>Go back into your Client-1 Remote Desktop Connection</li>
+  <li>Open Command Prompt</li>
+  <li>Type "ping -t (and paste the private IP address)" then press enter</li>
+    <ul>
+      <li>Notice the requests are no longer timed out because DC-1’s Windows Firewall is no longer blocking ICMP traffic.</li>
+    </ul>
+  <li>Press Ctrl + C to stop the perpetual ping.</li>
 </ol>
 </p>
 
@@ -62,10 +182,16 @@ This beginner-friendly tutorial provides hands-on experience with setting up an 
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Installation"/>
 </p>
+<h4>Install Active Directory Domain Services in DC-1.</h4>
 <p>
 <ol>
-  <li>Install Active Directory Domain Services in DC-1.</li>
-  <li>Promote DC-1 to a Domain Controller and set up a new forest.</li>
+  
+</ol>
+</p>
+<h4>Promote DC-1 to a Domain Controller and set up a new forest.</h4>
+<p>
+<ol>
+  
 </ol>
 </p>
 
