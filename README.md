@@ -46,7 +46,7 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <ol>
   <li>Search Virtual Machine</li>
     <ul>
-      <li>A VM is like a network switch that is in the cloud</li>
+      <li>A virtual machine is like a network switch that is in the cloud</li>
     </ul>
   <li>Click Create; Click Azure virtual machine</li>
   <li>Choose your Subscription (i.e. Azure subscription 1)</li>
@@ -185,13 +185,52 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <h4>Install Active Directory Domain Services in DC-1.</h4>
 <p>
 <ol>
-  
+  <li>Go back into your DC-1 Remote Desktop Connection</li>
+  <li>In the Server Manager application, click Add roles and features</li>
+    <ul>
+      <li>This is how we install Active Directory</li>
+    </ul>
+  <li>Click Next (x3 times)</li>
+  <li>Click the box next to Active Directory Domain Services to check it</li>
+    <ul>
+      <li>A pop-up screen may appear, just click Add Features</li>
+    </ul>
+  <li>Click Next (x3 times)</li>
+  <li>Click Install</li>
+  <li>Once installed, click Close</li>
 </ol>
 </p>
 <h4>Promote DC-1 to a Domain Controller and set up a new forest.</h4>
 <p>
 <ol>
-  
+  <li>In the Service Manager application, click on the flag with an exclamation symbol on the top right corner of the screen.</li>
+  <li>Click Promote this server to a domain controller
+    <ul>
+      <li>This is how we actually finish installing Active Directory and turn the server into a domain controller.</li>
+    </ul>
+  </li>
+  <li>Click Add a new forest
+    <ul>
+      <li>This is how we name the domain.</li>
+    </ul>
+  </li>
+  <li>Enter a Root domain name (i.e. mydomain.com)</li>
+  <li>Click Next</li>
+  <li>Enter a Password (i.e. Password1)</li>
+  <li>Click Next (x5 times)</li>
+  <li>Click Install</li>
+  <li>Allow the remote desktop connection to automatically restart (you will need to reconnect)</li>
+  <li>Open another window of the Remote Desktop Connection application on your computer and log back into DC-1
+    <ul>
+      <li>Notice that your credentials (i.e. Username: labuser and Password: Password1) no longer work because DC-1 is a domain controller now. So...</li>
+        <ul>
+          <li>Click "Use a different account"</li>
+          <li>For "Email address," enter the FQDN (aka Fully Qualified Domain Name; i.e. mydomain.com\labuser)</li>
+          <li>For Password, enter your password (i.e. Password1)</li>
+        </ul>
+    </ul>
+  </li>
+  <li>A warning message may pop up saying that it’s not trustworthy, just click Yes</li>
 </ol>
 </p>
 
@@ -199,11 +238,36 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="AD Account Creation"/>
 </p>
+<h4>Open Active Directory Users and Computers (ADUC) and create two Organizational Units (OU) called "_EMPLOYEES" and "_ADMINS".</h4>
 <p>
 <ol>
-  <li>Open Active Directory Users and Computers (ADUC) and create two Organizational Units (OU) called "_EMPLOYEES" and "_ADMINS".</li>
-  <li>Create and add a new admin to the "Domain Admins" Security Group.</li>
-  <li>Log out of DC-1, then log back in as the new admin.</li>
+  <li>In the Service Manager application, click on Tools, then click Active Directory Users and Computers
+    <ul>
+      <li>Alternatively, in the "Type here to search" section (bottom left corner of the screen), search Active Directory Users and Computers and open search result</li>
+      <li>Alternatively, in the "Type here to search" section (bottom left corner of the screen), open the "Windows Administrative Tools" folder then click Active Directory Users and Computers</li>
+    </ul>
+  </li>
+  <li>Right click mydomain.com, go to New, go to Organizational Unit
+    <ul>
+      <li>For now, you can think of Organizational Units like folders</li>
+    </ul>
+  <li>Enter a name (i.e. _EMPLOYEES)</li>
+  <li>Click OK</li>
+  <li>Right click mydomain.com again, go to New, go to Organizational Unit
+  <li>Enter a name (i.e. _ADMINS)</li>
+  <li>Click OK</li>
+</ol>
+</p>
+<h4>Create and add a new admin to the "Domain Admins" Security Group.</h4>
+<p>
+<ol>
+
+</ol>
+</p>
+<h4>Log out of DC-1, then log back in as the new admin.</h4>
+<p>
+<ol>
+
 </ol>
 </p>
 
@@ -211,10 +275,16 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Client to Domain"/>
 </p>
+<h4>In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.</h4>
 <p>
 <ol>
-  <li>In Azure, set Client-1's DNS settings to DC-1's NIC Private IP address and then restart Client-1.</li>
-  <li>Using Remote Desktop, log back into Client-1 as the original local admin and join Client-1 to the domain.</li>
+
+</ol>
+</p>
+<h4>Using Remote Desktop, log back into Client-1 as the original local admin and join Client-1 to the domain.</h4>
+<p>
+<ol>
+
 </ol>
 </p>
 
@@ -222,9 +292,10 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="RD Configuration"/>
 </p>
+<h4>Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.</h4>
 <p>
 <ol>
-  <li>Using Remote Desktop, log back into Client-1 as the new admin and allow "domain users" access to Remote Desktop.</li>
+
 </ol>
 </p>
 
@@ -232,13 +303,34 @@ This comprehensive tutorial provides hands-on experience with setting up an on-p
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Account Testing"/>
 </p>
+<h4>Using Remote Desktop, log back into DC-1 as the new admin and create additional users using this <a href="https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1">code</a> in Powershell.</h4>
 <p>
 <ol>
-  <li>Using Remote Desktop, log back into DC-1 as the new admin and create additional users using this <a href="https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1">code</a> in Powershell.</li>
-  <li>Open a second Remote Desktop window and log into Client-1 with one of the generated user accounts.</li>
-  <li>Unlock a user account with excessive incorrect password attempts.</li>
-  <li>Reset a user account's password.</li>
-  <li>Disable and enable a user account.</li>
+
+</ol>
+</p>
+<h4>Open a second Remote Desktop window and log into Client-1 with one of the generated user accounts.</h4>
+<p>
+<ol>
+
+</ol>
+</p>
+<h4>Unlock a user account with excessive incorrect password attempts.</h4>
+<p>
+<ol>
+
+</ol>
+</p>
+<h4>Reset a user account's password.</h4>
+<p>
+<ol>
+
+</ol>
+</p>
+<h4>Disable and enable a user account.</h4>
+<p>
+<ol>
+
 </ol>
 </p>
 
